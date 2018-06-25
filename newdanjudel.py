@@ -229,9 +229,12 @@ def check_lack(conpose_produce_mesg):
 
         for y in need_deal_peijian:
             if y not in differnt_compose_item:
-                differnt_compose_item[y] = x[2]
+                differnt_compose_item[y] = {}
+                differnt_compose_item[y]['sum'] = x[2]
+                differnt_compose_item[y]['list'] = str(x[2])
             else:
-                differnt_compose_item[y] = differnt_compose_item[y] + x[2]
+                differnt_compose_item[y]['sum'] = differnt_compose_item[y]['sum'] + x[2]
+                differnt_compose_item[y]['list'] = differnt_compose_item[y]['list'] + '+' + str(x[2])
     return differnt_compose_item
 
 def chage_place(newoutitem):
@@ -263,9 +266,15 @@ def out_mesg(output_item, differnt_compose_item):
 
     sheet2 = book.add_sheet(u'统计')
     i = 0
+    num = 1
     for key, value in differnt_compose_item.items():
-        sheet2.write(i, 0, key)
-        sheet2.write(i, 1, value)
+        for s, d in value.items():
+            if num == 1:
+                sheet2.write(i, 0, key)
+            sheet2.write(i, num, d)
+
+            num = num +2
+        num = 1
         i = i + 1
 
     book.save('3.xls')  # 存储excel
