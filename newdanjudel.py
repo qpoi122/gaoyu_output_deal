@@ -15,7 +15,7 @@ import copy
 import types
 import time
 
-def get_allfile_name():
+def get_allfile_mesg():
     produce_compose=[]
     number_produce=[]
     name_type = ['MRP报告数据', '生产建议数据']
@@ -178,10 +178,12 @@ def delzizhijian(produce_compose, specal_self_made):
                 mid = []
                 title_name = produce_compose[x][2]
                 mid.append(title_name)
-            if type(produce_compose[x][1]) == type(4) and u'ZNP' in title_name and type(produce_compose[x][2]) != type(4):
+            if type(produce_compose[x][1]) == type(4)  and type(produce_compose[x][2]) != type(4) and \
+                    (u'ZNP' in title_name or '/' in title_name):
                 panduantitle = produce_compose[x][2][:4]
                 if produce_compose[x][1] == 1 and panduantitle in typename and (
-                        (len(produce_compose[x][2]) == 7 and produce_compose[x][2][-1] in aaa) or len(produce_compose[x][2]) > 7):
+                        (len(produce_compose[x][2]) == 7 and produce_compose[x][2][-1] in aaa)
+                        or len(produce_compose[x][2]) > 7):
                     if len(mid) == 1:
                         mid.append(produce_compose[x][2][3:])
                         mid.append(produce_compose[x][5])
@@ -281,7 +283,8 @@ def out_mesg(output_item, differnt_compose_item):
 
 def sort_list(outitem):
     for x in outitem:
-        x[0] = x[0].split('ZNP-')[1]
+        if 'ZNP-' in x[0]:
+            x[0] = x[0].split('ZNP-')[1]
     newoutitem = sorted(outitem, key=lambda x:x[0])
     return newoutitem
 
@@ -289,10 +292,8 @@ def sort_list(outitem):
 
 
 if __name__ == "__main__":
-    produce_compose, number_produce = get_allfile_name()
-    # produce_compose = read_produce_compose('1')
+    produce_compose, number_produce = get_allfile_mesg()
     specal_self_made = read_specal_self_made('自制配件')
-    # number_produce = read_papernumber('2')
     conpose_produce_mesg = delzizhijian(produce_compose, specal_self_made)
     conpose_produce_mesg, differnt_compose_item = add_papernumber(conpose_produce_mesg, number_produce)
     newoutitem = sort_list(conpose_produce_mesg)
