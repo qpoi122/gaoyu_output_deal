@@ -46,9 +46,14 @@ def filename(content):
     # 打开文件
     global workbook, file_excel
     file_excel = str(content)
-    file = (file_excel )  # 文件名及中文合理性
-    if not os.path.exists(file):  # 判断文件是否存在
-        # file = (file_excel + '.xlsx')
+    if '.xl' not in file_excel:
+        file = (file_excel + '.xls')  # 文件名及中文合理性
+        if not os.path.exists(file):  # 判断文件是否存在
+            file = (file_excel + '.xlsx')
+            if not os.path.exists(file):
+                print("文件不存在")
+    else:
+        file = file_excel
         if not os.path.exists(file):
             print("文件不存在")
     workbook = xlrd.open_workbook(file)
@@ -286,7 +291,7 @@ def sort_list(outitem):
 if __name__ == "__main__":
     produce_compose, number_produce = get_allfile_name()
     # produce_compose = read_produce_compose('1')
-    specal_self_made = read_specal_self_made('自制配件.xls')
+    specal_self_made = read_specal_self_made('自制配件')
     # number_produce = read_papernumber('2')
     conpose_produce_mesg = delzizhijian(produce_compose, specal_self_made)
     conpose_produce_mesg, differnt_compose_item = add_papernumber(conpose_produce_mesg, number_produce)
