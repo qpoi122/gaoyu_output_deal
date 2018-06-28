@@ -121,6 +121,7 @@ def old_deal_allmesg(allmesg, count_num):
 
     return allmesg
 
+
 def deal_allmesg(allmesg, count_num):
     for x in allmesg:
         allmesg[x].setdefault('ok', '')
@@ -175,6 +176,7 @@ def output_mesg(allmesg):
 
     book.save('4.xls')  # 存储excel
     book = xlrd.open_workbook('4.xls')
+
     print('----------------------------------------------------------------------------------------')
     print('----------------------------------------------------------------------------------------')
     print(u'计算完成')
