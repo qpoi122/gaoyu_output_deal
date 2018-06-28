@@ -127,11 +127,13 @@ def deal_allmesg(allmesg, count_num):
 
     for allmesg_no in allmesg:
         need_deal_conpose = allmesg[allmesg_no]['compose']
+        # 将产品相关的信息分割然后放在一起
         if '/' in need_deal_conpose:
             need_deal_conpose_list = need_deal_conpose.split('/')
         else:
             need_deal_conpose_list = need_deal_conpose
         flag = 0
+        # 产品一一遍历然后核对对应的产品是不是足够扣，只要有一个不够则不进行扣除
         for y in need_deal_conpose_list:
             for count_num_no in count_num:
                 if y == count_num[count_num_no]['sub_model'] and \
@@ -173,6 +175,16 @@ def output_mesg(allmesg):
 
     book.save('4.xls')  # 存储excel
     book = xlrd.open_workbook('4.xls')
+    print('----------------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------------------')
+    print(u'计算完成')
+
+    print('----------------------------------------------------------------------------------------')
+
+    print('----------------------------------------------------------------------------------------')
+
+    time.sleep(10)
+
 
 
 if __name__ == "__main__":
