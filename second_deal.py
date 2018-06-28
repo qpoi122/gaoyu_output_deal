@@ -134,18 +134,26 @@ def deal_allmesg(allmesg, count_num):
         flag = 0
         for y in need_deal_conpose_list:
             for count_num_no in count_num:
-                if y == count_num[count_num_no]['sub_model']:
-                    if count_num[count_num_no]['have_number'] - allmesg[allmesg_no]['number'] >=0:
+                if y == count_num[count_num_no]['sub_model'] and \
+                        isinstance(count_num[count_num_no]['have_number'], int):
+                    if count_num[count_num_no]['have_number'] - allmesg[allmesg_no]['number'] >= 0:
                         pass
+
                     else:
                         flag = 1
-                        allmesg[allmesg_no]['ok'] += y
-        if flag != 0:
+                        if allmesg[allmesg_no]['ok'] == '':
+                            allmesg[allmesg_no]['ok'] = allmesg[allmesg_no]['ok'] + y
+                        else:
+                            allmesg[allmesg_no]['ok'] = allmesg[allmesg_no]['ok'] + '/' + y
+
+        if flag == 0:
             for y in need_deal_conpose_list:
                 for count_num_no in count_num:
-                    if y == count_num[count_num_no]['sub_model']:
+                    if y == count_num[count_num_no]['sub_model'] and \
+                            isinstance(count_num[count_num_no]['have_number'], int):
                         count_num[count_num_no]['have_number'] -= allmesg[allmesg_no]['number']
 
+    return allmesg
 
 
 def output_mesg(allmesg):
